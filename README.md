@@ -118,4 +118,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-For support, email support@empathai.com or join our [Discord community](https://discord.gg/empathai).
+For support, email support@empathai.live or join our [Discord community](https://discord.gg/tMR8DqRhY7).
