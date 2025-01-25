@@ -2,6 +2,12 @@
 
 EmpathAI is an innovative web application that combines mood tracking with AI-powered conversations to provide personalized mental health support. Built with Next.js and enhanced with modern UI components, it offers a seamless and engaging user experience.
 
+[![GitHub stars](https://img.shields.io/github/stars/SH20RAJ/EmpathAI?style=social)](https://github.com/SH20RAJ/EmpathAI)
+[![GitHub forks](https://img.shields.io/github/forks/SH20RAJ/EmpathAI?style=social)](https://github.com/SH20RAJ/EmpathAI/fork)
+[![GitHub issues](https://img.shields.io/github/issues/SH20RAJ/EmpathAI)](https://github.com/SH20RAJ/EmpathAI/issues)
+[![GitHub license](https://img.shields.io/github/license/SH20RAJ/EmpathAI)](https://github.com/SH20RAJ/EmpathAI/blob/main/LICENSE)
+[![Visitors](https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fgithub.com%2FSH20RAJ%2FEmpathAI&labelColor=%23ba68c8&countColor=%232ccce4&style=flat-square&labelStyle=upper)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FSH20RAJ%2FEmpathAI)
+
 ## 🌟 Features
 
 - **Mood Tracking**: Log and visualize your daily mood patterns with an interactive chart
