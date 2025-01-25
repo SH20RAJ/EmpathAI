@@ -16,6 +16,9 @@ EmpathAI is an innovative web application that combines mood tracking with AI-po
 - **Progress Insights**: Get personalized insights about your mood patterns and emotional well-being
 - **Secure & Private**: Your data is encrypted and stored securely
 
+![EmpathAI Screenshot](https://i.imgur.com/kaPZqM4.png)
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
