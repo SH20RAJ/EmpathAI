@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EmpathAI - AI-Powered Mood Tracking and Mental Health Support
 
-## Getting Started
+EmpathAI is an innovative web application that combines mood tracking with AI-powered conversations to provide personalized mental health support. Built with Next.js and enhanced with modern UI components, it offers a seamless and engaging user experience.
 
-First, run the development server:
+## 🌟 Features
 
+- **Mood Tracking**: Log and visualize your daily mood patterns with an interactive chart
+- **AI Chat Support**: Have meaningful conversations with an AI that understands and responds to your emotional state
+- **Resource Library**: Access curated mental health resources and articles
+- **Progress Insights**: Get personalized insights about your mood patterns and emotional well-being
+- **Secure & Private**: Your data is encrypted and stored securely
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- MySQL Database
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/empathai.git
+cd empathai
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+Create a `.env` file in the root directory with the following variables:
+```env
+DB_HOST=your_db_host
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=your_db_name
+OPENAI_API_KEY=your_openai_key
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run database migrations:
+```bash
+node src/db/migrate.js
+```
 
-## Learn More
+5. Start the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Visit `http://localhost:3000` to see the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Frontend**: Next.js 14, React, TailwindCSS
+- **UI Components**: shadcn/ui
+- **Database**: MySQL with Drizzle ORM
+- **Authentication**: NextAuth.js
+- **Charts**: Recharts
+- **AI Integration**: OpenAI API
 
-## Deploy on Vercel
+## 📱 Features in Detail
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Mood Tracking
+- Daily mood logging with notes
+- Interactive mood history visualization
+- Weekly and monthly mood summaries
+- Pattern recognition and insights
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### AI Chat Support
+- Context-aware conversations
+- Emotional support and guidance
+- Progress tracking
+- Customizable chat interface
+
+### Resource Center
+- Curated mental health articles
+- Guided meditation resources
+- Self-help tools and exercises
+- Community support links
+
+## 🔒 Security
+
+- All sensitive data is encrypted
+- GDPR compliant
+- Regular security audits
+- Secure authentication with NextAuth.js
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- OpenAI for their powerful API
+- The mental health professional community for guidance
+- Our amazing contributors and supporters
+
+## 📞 Support
+
+For support, email support@empathai.com or join our [Discord community](https://discord.gg/empathai).
