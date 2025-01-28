@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
-import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { db } from '@/db';
-import GoogleProvider from 'next-auth/providers/google';
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/db";
 
-export const authOptions = {
+const handler = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [
     GoogleProvider({
@@ -11,6 +11,9 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    signIn: "/auth/signin",
+  },
   callbacks: {
     async session({ session, user }) {
       if (session?.user) {
@@ -19,10 +22,6 @@ export const authOptions = {
       return session;
     },
   },
-  pages: {
-    signIn: '/auth/signin',
-  },
-};
+});
 
-const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

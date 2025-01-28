@@ -8,11 +8,9 @@ import {
   MessageSquare,
   BarChart3,
   Settings,
-  LogOut,
   BookOpen,
   Home,
 } from "lucide-react";
-import { signOut } from "next-auth/react";
 
 const navigation = [
   { name: "Home", href: "/", icon: Home },
@@ -56,16 +54,6 @@ export function Sidebar() {
             );
           })}
         </nav>
-      </div>
-      <div className="border-t border-sidebar-border pt-4">
-        <Button
-          variant="ghost"
-          className="w-full justify-start gap-2 text-sidebar-foreground hover:bg-sidebar-accent/50"
-          onClick={() => signOut()}
-        >
-          <LogOut className="h-4 w-4" />
-          Sign Out
-        </Button>
       </div>
     </div>
   );

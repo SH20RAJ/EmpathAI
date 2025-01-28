@@ -1,23 +1,29 @@
 import { NextResponse } from "next/server";
-import openai from "@/lib/openai";
-import { db } from "@/db";
-import { messages, conversations } from "@/db/schema/schema";
-import { eq } from "drizzle-orm";
+import { OpenAI } from "openai";
+import { StreamingTextResponse } from "ai";
 
-const SYSTEM_PROMPT = `You are EmpathAI, a compassionate and understanding mental health companion. Your role is to provide emotional support, active listening, and helpful guidance while maintaining a warm and empathetic tone. Remember to:
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-1. Practice active listening and validate emotions
-2. Ask thoughtful follow-up questions
-3. Offer practical coping strategies when appropriate
-4. Maintain boundaries and remind users to seek professional help for serious concerns
-5. Keep responses concise but meaningful
-6. Focus on empowerment and growth
+const SYSTEM_PROMPT = `You are EmpathAI, an empathetic AI companion designed to help users track and understand their moods and emotions. Your responses should be:
+1. Empathetic and understanding
+2. Helpful and constructive
+3. Focused on emotional well-being
+4. Professional but warm
+5. Clear and concise
 
-Important: Never provide medical advice or attempt to diagnose conditions.`;
+You can help users by:
+- Listening to their concerns
+- Asking clarifying questions
+- Providing emotional support
+- Suggesting healthy coping strategies
+- Encouraging professional help when appropriate
+
+Remember to maintain appropriate boundaries and never provide medical advice.`;
 
 export async function POST(req) {
   try {
-    // Remove or modify session check
     const { message } = await req.json();
     let currentChatId = chatId;
 
@@ -56,23 +62,16 @@ export async function POST(req) {
     ];
 
     // Get AI response
-    const completion = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
+      model: "gpt-4",
       messages: formattedMessages,
-      model: "gpt-4-1106-preview",
+      stream: true,
       temperature: 0.7,
       max_tokens: 500,
     });
 
-    const aiResponse = completion.choices[0].message.content;
-
-    // Store AI response
-    await db.insert(messages).values({
-      conversationId: currentChatId,
-      content: aiResponse,
-      role: "assistant",
-    });
-
-    return NextResponse.json({ message: aiResponse, chatId: currentChatId });
+    // Transform the response into a readable stream
+    return new StreamingTextResponse(response.toReadableStream());
   } catch (error) {
     console.error("Chat error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
