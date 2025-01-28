@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 import openai from "@/lib/openai";
 import { db } from "@/db";
 import { messages, conversations } from "@/db/schema/schema";
@@ -19,29 +17,24 @@ Important: Never provide medical advice or attempt to diagnose conditions.`;
 
 export async function POST(req) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const { message, conversationId } = await req.json();
-    let currentConversationId = conversationId;
+    // Remove or modify session check
+    const { message } = await req.json();
+    let currentChatId = chatId;
 
     // Create a new conversation if none exists
-    if (!currentConversationId) {
+    if (!currentChatId) {
       const [newConversation] = await db
         .insert(conversations)
         .values({
-          userId: session.user.id,
           title: message.slice(0, 100),
         })
         .returning();
-      currentConversationId = newConversation.id;
+      currentChatId = newConversation.id;
     }
 
     // Store user message
     await db.insert(messages).values({
-      conversationId: currentConversationId,
+      conversationId: currentChatId,
       content: message,
       role: "user",
     });
@@ -50,22 +43,22 @@ export async function POST(req) {
     const conversationHistory = await db
       .select()
       .from(messages)
-      .where(eq(messages.conversationId, currentConversationId))
+      .where(eq(messages.conversationId, currentChatId))
       .orderBy(messages.createdAt);
 
-    // Prepare messages for OpenAI
-    const apiMessages = [
+    // Format messages for OpenAI
+    const formattedMessages = [
       { role: "system", content: SYSTEM_PROMPT },
-      ...conversationHistory.map(msg => ({
+      ...conversationHistory.map((msg) => ({
         role: msg.role,
         content: msg.content,
       })),
     ];
 
-    // Get OpenAI response
+    // Get AI response
     const completion = await openai.chat.completions.create({
-      model: "gpt-4-turbo-preview",
-      messages: apiMessages,
+      messages: formattedMessages,
+      model: "gpt-4-1106-preview",
       temperature: 0.7,
       max_tokens: 500,
     });
@@ -74,17 +67,14 @@ export async function POST(req) {
 
     // Store AI response
     await db.insert(messages).values({
-      conversationId: currentConversationId,
+      conversationId: currentChatId,
       content: aiResponse,
       role: "assistant",
     });
 
-    return NextResponse.json({
-      message: aiResponse,
-      conversationId: currentConversationId,
-    });
+    return NextResponse.json({ message: aiResponse, chatId: currentChatId });
   } catch (error) {
-    console.error("Chat API Error:", error);
+    console.error("Chat error:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
